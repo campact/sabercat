@@ -1,3 +1,13 @@
+machine:
+  environment:
+    GOOS: linux
+    GOARCH: amd64
+
+dependencies:
+  override:
+    - go get -t -d -v ./...
+    - go build -v ./cmd/sabercat
+
 test:
   override:
     - go test -race -v -cover ./...
@@ -6,4 +16,4 @@ deployment:
   build:
     tag: /.*/
     commands:
-      - go build -o $CIRCLE_ARTIFACTS/sabercat_$CIRCLE_TAG ./cmd/sabercat
+      - cp sabercat $CIRCLE_ARTIFACTS/sabercat_$CIRCLE_TAG
