@@ -28,6 +28,8 @@ before_deploy:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: curl -T '{sabercat,sabercat.sha256}' -u "${ARTIFACT_USER}:${ARTIFACT_PASS}" "https://artifacts.extern.campact.de/ext/sabercat/${TRAVIS_TAG}/"
+    script: >-
+      curl -X MKCOL -u ${ARTIFACT_USERNAME}:${ARTIFACT_PASSWORD} ${ARTIFACT_LOCATION}/${TRAVIS_TAG} &&
+      curl -T '{sabercat,sabercat.sha256}' -u ${ARTIFACT_USERNAME}:${ARTIFACT_PASSWORD} ${ARTIFACT_LOCATION}/${TRAVIS_TAG}/
     on:
       tags: true
